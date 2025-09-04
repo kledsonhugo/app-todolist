@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 Todo List - Gerenciador de Tarefas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .form-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .form-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 14px;
+            margin: 0 3px;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+            color: #333;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .todo-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .todo-item {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .todo-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .todo-item.completed {
+            opacity: 0.7;
+            background: #f8f9fa;
+        }
+
+        .todo-item.completed .todo-title {
+            text-decoration: line-through;
+            color: #6c757d;
+        }
+
+        .todo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .todo-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .priority-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .priority-1 { background: #d4edda; color: #155724; }
+        .priority-2 { background: #fff3cd; color: #856404; }
+        .priority-3 { background: #f8d7da; color: #721c24; }
+
+        .todo-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .todo-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        .todo-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .todo-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .todo-actions {
+                justify-content: center;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 Todo List</h1>
+            <p>Gerencie suas tarefas de forma simples e eficiente</p>
+        </div>
+
+        <div class="content">
+            <!-- Mensagens -->
+            <div id="messages"></div>
+
+            <!-- Formulário para nova tarefa -->
+            <div class="form-section">
+                <h2>➕ Nova Tarefa</h2>
+                <form id="todoForm">
+                    <div class="form-group">
+                        <label for="title">Título *</label>
+                        <input type="text" id="title" name="title" required maxlength="100" 
+                               placeholder="Ex: Estudar JavaScript">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Descrição</label>
+                        <textarea id="description" name="description" 
+                                  placeholder="Detalhes adicionais sobre a tarefa (opcional)"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="priority">Prioridade</label>
+                        <select id="priority" name="priority">
+                            <option value="1">🟢 Baixa</option>
+                            <option value="2" selected>🟡 Média</option>
+                            <option value="3">🔴 Alta</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn">Adicionar Tarefa</button>
+                </form>
+            </div>
+
+            <!-- Filtros -->
+            <div class="filters">
+                <button class="btn btn-small" onclick="loadTodos()">📋 Todas</button>
+                <button class="btn btn-small btn-warning" onclick="loadTodos(false)">⏳ Pendentes</button>
+                <button class="btn btn-small btn-success" onclick="loadTodos(true)">✅ Concluídas</button>
+            </div>
+
+            <!-- Lista de tarefas -->
+            <div id="todoList" class="todo-list">
+                <div class="loading">Carregando tarefas...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuração da API
+        const API_BASE_URL = 'http://localhost:5274';
+
+        // Estado da aplicação
+        let currentFilter = null;
+        let todos = [];
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTodos();
+            
+            // Event listener para o formulário
+            document.getElementById('todoForm').addEventListener('submit', handleSubmit);
+        });
+
+        // Funções de mensagem
+        function showMessage(message, type = 'success') {
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML = `<div class="${type}">${message}</div>`;
+            
+            setTimeout(() => {
+                messagesDiv.innerHTML = '';
+            }, 3000);
+        }
+
+        function showError(message) {
+            showMessage(message, 'error');
+        }
+
+        // Carregar tarefas
+        async function loadTodos(completed = null) {
+            try {
+                currentFilter = completed;
+                const url = completed !== null 
+                    ? `${API_BASE_URL}/todos?completed=${completed}`
+                    : `${API_BASE_URL}/todos`;
+
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`Erro ao carregar tarefas: ${response.status}`);
+                }
+
+                todos = await response.json();
+                renderTodos();
+                
+            } catch (error) {
+                console.error('Erro ao carregar tarefas:', error);
+                showError('Erro ao carregar tarefas. Verifique se a API está rodando.');
+                document.getElementById('todoList').innerHTML = 
+                    '<div class="error">Erro ao conectar com a API. Verifique se o servidor está rodando em http://localhost:5274</div>';
+            }
+        }
+
+        // Renderizar lista de tarefas
+        function renderTodos() {
+            const todoList = document.getElementById('todoList');
+            
+            if (todos.length === 0) {
+                const filterText = currentFilter === true ? 'concluídas' : 
+                                 currentFilter === false ? 'pendentes' : '';
+                todoList.innerHTML = `
+                    <div class="empty-state">
+                        <h3>Nenhuma tarefa ${filterText} encontrada</h3>
+                        <p>Que tal adicionar uma nova tarefa?</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const todosHtml = todos.map(todo => `
+                <div class="todo-item ${todo.isCompleted ? 'completed' : ''}">
+                    <div class="todo-header">
+                        <h3 class="todo-title">${escapeHtml(todo.title)}</h3>
+                        <span class="priority-badge priority-${todo.priority}">
+                            ${getPriorityText(todo.priority)}
+                        </span>
+                    </div>
+                    
+                    ${todo.description ? `<div class="todo-description">${escapeHtml(todo.description)}</div>` : ''}
+                    
+                    <div class="todo-meta">
+                        <span>Criada em: ${formatDate(todo.createdAt)}</span>
+                        ${todo.completedAt ? `<span>Concluída em: ${formatDate(todo.completedAt)}</span>` : ''}
+                    </div>
+                    
+                    <div class="todo-actions">
+                        ${!todo.isCompleted ? 
+                            `<button class="btn btn-small btn-success" onclick="completeTodo(${todo.id})">✅ Concluir</button>` :
+                            `<button class="btn btn-small btn-warning" onclick="uncompleteTodo(${todo.id})">↩️ Reabrir</button>`
+                        }
+                        <button class="btn btn-small" onclick="editTodo(${todo.id})">✏️ Editar</button>
+                        <button class="btn btn-small btn-danger" onclick="deleteTodo(${todo.id})">🗑️ Excluir</button>
+                    </div>
+                </div>
+            `).join('');
+
+            todoList.innerHTML = todosHtml;
+        }
+
+        // Adicionar nova tarefa
+        async function handleSubmit(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const todoData = {
+                title: formData.get('title').trim(),
+                description: formData.get('description').trim() || null,
+                priority: parseInt(formData.get('priority'))
+            };
+
+            if (!todoData.title) {
+                showError('O título é obrigatório!');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/todos`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(todoData)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro ao criar tarefa: ${response.status}`);
+                }
+
+                const newTodo = await response.json();
+                showMessage('Tarefa criada com sucesso!');
+                
+                // Limpar formulário
+                event.target.reset();
+                document.getElementById('priority').value = '2';
+                
+                // Recarregar lista
+                loadTodos(currentFilter);
+                
+            } catch (error) {
+                console.error('Erro ao criar tarefa:', error);
+                showError('Erro ao criar tarefa. Tente novamente.');
+            }
+        }
+
+        // Concluir tarefa
+        async function completeTodo(id) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/todos/${id}/complete`, {
+                    method: 'POST'
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro ao concluir tarefa: ${response.status}`);
+                }
+
+                showMessage('Tarefa concluída! 🎉');
+                loadTodos(currentFilter);
+                
+            } catch (error) {
+                console.error('Erro ao concluir tarefa:', error);
+                showError('Erro ao concluir tarefa. Tente novamente.');
+            }
+        }
+
+        // Reabrir tarefa
+        async function uncompleteTodo(id) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/todos/${id}/uncomplete`, {
+                    method: 'POST'
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro ao reabrir tarefa: ${response.status}`);
+                }
+
+                showMessage('Tarefa reaberta!');
+                loadTodos(currentFilter);
+                
+            } catch (error) {
+                console.error('Erro ao reabrir tarefa:', error);
+                showError('Erro ao reabrir tarefa. Tente novamente.');
+            }
+        }
+
+        // Editar tarefa (simplificado)
+        async function editTodo(id) {
+            const todo = todos.find(t => t.id === id);
+            if (!todo) return;
+
+            const newTitle = prompt('Novo título:', todo.title);
+            if (newTitle === null || newTitle.trim() === '') return;
+
+            const newDescription = prompt('Nova descrição:', todo.description || '');
+            const newPriority = prompt('Nova prioridade (1=Baixa, 2=Média, 3=Alta):', todo.priority);
+
+            try {
+                const updateData = {
+                    title: newTitle.trim(),
+                    description: newDescription?.trim() || null,
+                    priority: parseInt(newPriority) || todo.priority
+                };
+
+                const response = await fetch(`${API_BASE_URL}/todos/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updateData)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro ao atualizar tarefa: ${response.status}`);
+                }
+
+                showMessage('Tarefa atualizada com sucesso!');
+                loadTodos(currentFilter);
+                
+            } catch (error) {
+                console.error('Erro ao atualizar tarefa:', error);
+                showError('Erro ao atualizar tarefa. Tente novamente.');
+            }
+        }
+
+        // Excluir tarefa
+        async function deleteTodo(id) {
+            if (!confirm('Tem certeza que deseja excluir esta tarefa?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/todos/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro ao excluir tarefa: ${response.status}`);
+                }
+
+                showMessage('Tarefa excluída com sucesso!');
+                loadTodos(currentFilter);
+                
+            } catch (error) {
+                console.error('Erro ao excluir tarefa:', error);
+                showError('Erro ao excluir tarefa. Tente novamente.');
+            }
+        }
+
+        // Funções utilitárias
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function getPriorityText(priority) {
+            switch (priority) {
+                case 1: return 'Baixa';
+                case 2: return 'Média';
+                case 3: return 'Alta';
+                default: return 'Normal';
+            }
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('pt-BR', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+    </script>
+</body>
+</html>

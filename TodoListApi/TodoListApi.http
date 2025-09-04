@@ -1,0 +1,63 @@
+@TodoListApi_HostAddress = https://localhost:7048
+
+### Listar todas as tarefas
+GET {{TodoListApi_HostAddress}}/todos
+Accept: application/json
+
+### Listar apenas tarefas concluídas
+GET {{TodoListApi_HostAddress}}/todos?completed=true
+Accept: application/json
+
+### Listar apenas tarefas pendentes
+GET {{TodoListApi_HostAddress}}/todos?completed=false
+Accept: application/json
+
+### Criar uma nova tarefa
+POST {{TodoListApi_HostAddress}}/todos
+Content-Type: application/json
+
+{
+  "title": "Estudar .NET",
+  "description": "Aprender sobre APIs mínimas no ASP.NET Core",
+  "priority": 2
+}
+
+### Criar outra tarefa
+POST {{TodoListApi_HostAddress}}/todos
+Content-Type: application/json
+
+{
+  "title": "Fazer compras",
+  "description": "Comprar ingredientes para o jantar",
+  "priority": 1
+}
+
+### Obter uma tarefa específica por ID
+GET {{TodoListApi_HostAddress}}/todos/1
+Accept: application/json
+
+### Atualizar uma tarefa
+PUT {{TodoListApi_HostAddress}}/todos/1
+Content-Type: application/json
+
+{
+  "title": "Estudar .NET - Atualizado",
+  "description": "Aprender sobre APIs mínimas e Entity Framework",
+  "priority": 3
+}
+
+### Marcar tarefa como concluída
+POST {{TodoListApi_HostAddress}}/todos/1/complete
+Content-Type: application/json
+
+### Marcar tarefa como não concluída
+POST {{TodoListApi_HostAddress}}/todos/1/uncomplete
+Content-Type: application/json
+
+### Deletar uma tarefa
+DELETE {{TodoListApi_HostAddress}}/todos/2istApi_HostAddress = http://localhost:5274
+
+GET {{TodoListApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
