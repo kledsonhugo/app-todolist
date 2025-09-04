@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Teste Manual da Interface Web - Todo List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-title {
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .test-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .test-checkbox {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        .test-description {
+            flex: 1;
+        }
+        .test-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .pending { background: #fff3cd; color: #856404; }
+        .passed { background: #d4edda; color: #155724; }
+        .failed { background: #f8d7da; color: #721c24; }
+        .instructions {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .category {
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Teste Manual da Interface Web - Todo List</h1>
+    
+    <div class="instructions">
+        <h3>📋 Instruções para Teste Manual</h3>
+        <p><strong>Pré-requisito:</strong> Certifique-se de que a aplicação está rodando em <code>http://localhost:5274</code></p>
+        <p><strong>Como usar:</strong> Abra a interface web em outra aba e execute cada teste. Marque como ✅ Passou ou ❌ Falhou conforme o resultado.</p>
+        <p><strong>Link da Aplicação:</strong> <a href="http://localhost:5274" target="_blank">http://localhost:5274</a></p>
+    </div>
+
+    <div class="test-container">
+        <h2 class="test-title">🌐 Testes de Carregamento e Interface</h2>
+        
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test1">
+            <div class="test-description">
+                <strong>Carregamento da Página Principal</strong><br>
+                Acesse http://localhost:5274 e verifique se a página carrega corretamente com título "Todo List" e formulário de nova tarefa visível.
+            </div>
+            <div class="test-status pending" id="status1">Pendente</div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test2">
+            <div class="test-description">
+                <strong>Elementos da Interface</strong><br>
+                Verifique se estão presentes: campo título, descrição, seletor de prioridade, botão "Adicionar Tarefa", filtros e lista de tarefas.
+            </div>
+            <div class="test-status pending" id="status2">Pendente</div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test3">
+            <div class="test-description">
+                <strong>Tarefas de Exemplo</strong><br>
+                Verifique se as tarefas de exemplo são carregadas automaticamente na primeira visita.
+            </div>
+            <div class="test-status pending" id="status3">Pendente</div>
+        </div>
+    </div>
+
+    <div class="test-container">
+        <h2 class="test-title">➕ Testes de Criação de Tarefas</h2>
+        
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test4">
+            <div class="test-description">
+                <strong>Criar Nova Tarefa</strong><br>
+                Preencha: Título="Teste Manual", Descrição="Descrição do teste", Prioridade=Alta. Clique "Adicionar Tarefa" e verifique se aparece na lista.
+            </div>
+            <div class="test-status pending" id="status4">Pendente</div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test5">
+            <div class="test-description">
+                <strong>Validação de Campo Obrigatório</strong><br>
+                Tente criar uma tarefa sem título. Deve aparecer mensagem de erro e a tarefa não deve ser criada.
+            </div>
+            <div class="test-status pending" id="status5">Pendente</div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test6">
+            <div class="test-description">
+                <strong>Limpeza do Formulário</strong><br>
+                Após criar uma tarefa com sucesso, verifique se o formulário é limpo automaticamente.
+            </div>
+            <div class="test-status pending" id="status6">Pendente</div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test7">
+            <div class="test-description">
+                <strong>Mensagem de Sucesso</strong><br>
+                Ao criar uma tarefa, deve aparecer mensagem verde "Tarefa criada com sucesso!" que desaparece após 3 segundos.
+            </div>
+            <div class="test-status pending" id="status7">Pendente</div>
+        </div>
+    </div>
+
+    <div class="test-container">
+        <h2 class="test-title">🔍 Testes de Filtros</h2>
+        
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test8">
+            <div class="test-description">
+                <strong>Filtro "Todas"</strong><br>
+                Clique no botão "📋 Todas" e verifique se todas as tarefas (pendentes e concluídas) são exibidas.
+            </div>
+            <div class="test-status pending" id="status8">Pendente</div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test9">
+            <div class="test-description">
+                <strong>Filtro "Pendentes"</strong><br>
+                Clique no botão "⏳ Pendentes" e verifique se apenas tarefas não concluídas são exibidas.
+            </div>
+            <div class="test-status pending" id="status9">Pendente</div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test10">
+            <div class="test-description">
+                <strong>Filtro "Concluídas"</strong><br>
+                Clique no botão "✅ Concluídas" e verifique se apenas tarefas concluídas são exibidas.
+            </div>
+            <div class="test-status pending" id="status10">Pendente</div>
+        </div>
+    </div>
+
+    <div class="test-container">
+        <h2 class="test-title">✅ Testes de Gerenciamento de Tarefas</h2>
+        
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test11">
+            <div class="test-description">
+                <strong>Concluir Tarefa</strong><br>
+                Clique no botão "✅ Concluir" de uma tarefa pendente. Verifique se ela fica riscada, com opacidade reduzida e o botão muda para "↩️ Reabrir".
+            </div>
+            <div class="test-status pending" id="status11">Pendente</div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test12">
+            <div class="test-description">
+                <strong>Reabrir Tarefa</strong><br>
+                Clique no botão "↩️ Reabrir" de uma tarefa concluída. Verifique se ela volta ao estado normal e o botão muda para "✅ Concluir".
+            </div>
+            <div class="test-status pending" id="status12">Pendente</div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test13">
+            <div class="test-description">
+                <strong>Editar Tarefa</strong><br>
+                Clique no botão "✏️ Editar" de uma tarefa. Altere o título, descrição e prioridade nos prompts que aparecem. Verifique se as alterações são salvas.
+            </div>
+            <div class="test-status pending" id="status13">Pendente</div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test14">
+            <div class="test-description">
+                <strong>Excluir Tarefa</strong><br>
+                Clique no botão "🗑️ Excluir" de uma tarefa. Confirme na mensagem que aparece. Verifique se a tarefa é removida da lista.
+            </div>
+            <div class="test-status pending" id="status14">Pendente</div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test15">
+            <div class="test-description">
+                <strong>Cancelar Exclusão</strong><br>
+                Clique no botão "🗑️ Excluir" de uma tarefa e cancele na confirmação. Verifique se a tarefa permanece na lista.
+            </div>
+            <div class="test-status pending" id="status15">Pendente</div>
+        </div>
+    </div>
+
+    <div class="test-container">
+        <h2 class="test-title">🎨 Testes de Interface Visual</h2>
+        
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test16">
+            <div class="test-description">
+                <strong>Badges de Prioridade</strong><br>
+                Verifique se as prioridades são exibidas corretamente: Verde (Baixa), Amarelo (Média), Vermelho (Alta).
+            </div>
+            <div class="test-status pending" id="status16">Pendente</div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test17">
+            <div class="test-description">
+                <strong>Datas de Criação e Conclusão</strong><br>
+                Verifique se as datas de criação são exibidas e se a data de conclusão aparece quando a tarefa é marcada como concluída.
+            </div>
+            <div class="test-status pending" id="status17">Pendente</div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test18">
+            <div class="test-description">
+                <strong>Efeitos Hover</strong><br>
+                Passe o mouse sobre as tarefas e botões. Verifique se há efeitos visuais de hover apropriados.
+            </div>
+            <div class="test-status pending" id="status18">Pendente</div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test19">
+            <div class="test-description">
+                <strong>Responsividade Mobile</strong><br>
+                Reduza o tamanho da janela ou use as ferramentas de desenvolvedor para simular um dispositivo móvel. Verifique se a interface se adapta.
+            </div>
+            <div class="test-status pending" id="status19">Pendente</div>
+        </div>
+    </div>
+
+    <div class="test-container">
+        <h2 class="test-title">⚠️ Testes de Tratamento de Erros</h2>
+        
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test20">
+            <div class="test-description">
+                <strong>API Offline</strong><br>
+                Pare o servidor (Ctrl+C) e tente realizar alguma ação na interface. Deve aparecer mensagem de erro apropriada.
+            </div>
+            <div class="test-status pending" id="status20">Pendente</div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="test-checkbox" id="test21">
+            <div class="test-description">
+                <strong>Recuperação após Erro</strong><br>
+                Reativie o servidor e verifique se a interface volta a funcionar normalmente ao recarregar a página.
+            </div>
+            <div class="test-status pending" id="status21">Pendente</div>
+        </div>
+    </div>
+
+    <div class="test-container">
+        <h2 class="test-title">📊 Resumo dos Testes</h2>
+        <div id="summary">
+            <p><strong>Total de Testes:</strong> <span id="totalTests">21</span></p>
+            <p><strong>Testes Passaram:</strong> <span id="passedTests">0</span></p>
+            <p><strong>Testes Falharam:</strong> <span id="failedTests">0</span></p>
+            <p><strong>Testes Pendentes:</strong> <span id="pendingTests">21</span></p>
+            <p><strong>Taxa de Sucesso:</strong> <span id="successRate">0%</span></p>
+        </div>
+    </div>
+
+    <script>
+        // Atualizar status dos testes quando checkboxes mudam
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('.test-checkbox');
+            
+            checkboxes.forEach((checkbox, index) => {
+                checkbox.addEventListener('change', function() {
+                    const statusElement = document.getElementById(`status${index + 1}`);
+                    
+                    if (this.checked) {
+                        // Simular entrada do usuário - na vida real, o tester marcaria como passou ou falhou
+                        const passed = confirm('Este teste passou? (OK = Passou, Cancelar = Falhou)');
+                        if (passed) {
+                            statusElement.textContent = '✅ Passou';
+                            statusElement.className = 'test-status passed';
+                        } else {
+                            statusElement.textContent = '❌ Falhou';
+                            statusElement.className = 'test-status failed';
+                            this.checked = false; // Desmarcar se falhou
+                        }
+                    } else {
+                        statusElement.textContent = 'Pendente';
+                        statusElement.className = 'test-status pending';
+                    }
+                    
+                    updateSummary();
+                });
+            });
+        });
+
+        function updateSummary() {
+            const totalTests = 21;
+            const passedTests = document.querySelectorAll('.test-status.passed').length;
+            const failedTests = document.querySelectorAll('.test-status.failed').length;
+            const pendingTests = totalTests - passedTests - failedTests;
+            const successRate = totalTests > 0 ? Math.round((passedTests / totalTests) * 100) : 0;
+
+            document.getElementById('passedTests').textContent = passedTests;
+            document.getElementById('failedTests').textContent = failedTests;
+            document.getElementById('pendingTests').textContent = pendingTests;
+            document.getElementById('successRate').textContent = successRate + '%';
+        }
+    </script>
+</body>
+</html>

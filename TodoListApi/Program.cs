@@ -125,3 +125,6 @@ app.MapPost("/todos/{id:int}/uncomplete", async (int id, IToDoService todoServic
 .WithSummary("Marcar uma tarefa como não concluída");
 
 app.Run();
+
+// Make Program class accessible for testing
+public partial class Program { }
